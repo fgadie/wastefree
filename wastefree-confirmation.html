@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subscription Confirmation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6fb;
+      color: #333;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #001eb3;
+    }
+    p {
+      font-size: 18px;
+    }
+    .status {
+      margin-top: 30px;
+      font-size: 15px;
+      color: #555;
+    }
+    .error {
+      color: #b30000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="headline">Confirming Your Subscription...</h1>
+    <p class="status" id="status">Please wait while we confirm your details...</p>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById("status");
+    const headlineEl = document.getElementById("headline");
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("Id");
+
+    if (!id) {
+      headlineEl.textContent = "Confirmation Failed";
+      statusEl.textContent = "❌ No ID was found in the URL.";
+      statusEl.classList.add("error");
+    } else {
+      fetch("https://hooks.zapier.com/hooks/catch/6735747/20aowe2/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ Id: id })
+      })
+      .then(async res => {
+        if (res.ok) {
+          headlineEl.textContent = "You're In! ✅";
+          statusEl.textContent = "Thanks for confirming your subscription to Wastefree.";
+        } else {
+          const errorText = await res.text();
+          headlineEl.textContent = "Something Went Wrong";
+          statusEl.textContent = `❌ Zapier responded with an error: ${errorText}`;
+          statusEl.classList.add("error");
+        }
+      })
+      .catch(err => {
+        headlineEl.textContent = "Error Confirming";
+        statusEl.textContent = `❌ Could not contact Zapier: ${err.message}`;
+        statusEl.classList.add("error");
+        console.error("Zapier POST error:", err);
+      });
+    }
+  </script>
+</body>
+</html>
