@@ -53,30 +53,19 @@
       statusEl.textContent = "❌ No ID was found in the URL.";
       statusEl.classList.add("error");
     } else {
-      fetch("https://hooks.zapier.com/hooks/catch/6735747/20aowe2/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ Id: id })
-      })
-      .then(async res => {
-        if (res.ok) {
-          headlineEl.textContent = "You're In! ✅";
-          statusEl.textContent = "Thanks for confirming your subscription to Wastefree.";
-        } else {
-          const errorText = await res.text();
-          headlineEl.textContent = "Something Went Wrong";
-          statusEl.textContent = `❌ Zapier responded with an error: ${errorText}`;
-          statusEl.classList.add("error");
-        }
-      })
-      .catch(err => {
-        headlineEl.textContent = "Error Confirming";
-        statusEl.textContent = `❌ Could not contact Zapier: ${err.message}`;
+      const zapierURL = `https://hooks.zapier.com/hooks/catch/6735747/20aowe2/?Id=${encodeURIComponent(id)}`;
+      const img = new Image();
+      img.src = zapierURL;
+      img.onload = () => {
+        headlineEl.textContent = "You're In! ✅";
+        statusEl.textContent = "Thanks for confirming your subscription to Wastefree.";
+      };
+      img.onerror = () => {
+        headlineEl.textContent = "Subscription Confirmation Error";
+        statusEl.textContent = "⚠️ Could not notify our system. Please try again later.";
         statusEl.classList.add("error");
-        console.error("Zapier POST error:", err);
-      });
+      };
+      document.body.appendChild(img);
     }
   </script>
 </body>
