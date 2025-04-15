@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subscription Confirmed</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6fb;
+      color: #333;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #001eb3;
+    }
+    p {
+      font-size: 18px;
+    }
+    .debug {
+      margin-top: 20px;
+      color: #999;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>You're In! ✅</h1>
+    <p>Thanks for confirming your subscription to <strong>Wastefree</strong>.</p>
+    <p>We’re excited to share our zero-waste journey with you 🌍</p>
+    <p id="status" class="debug">Checking your ID and notifying Zapier...</p>
+  </div>
+
+  <script>
+    const statusEl = document.getElementById("status");
+    const params = new URLSearchParams(window.location.search);
+    const uid = params.get("v");
+
+    if (!uid) {
+      statusEl.textContent = "❌ No ID found in the URL.";
+    } else {
+      fetch("https://hooks.zapier.com/hooks/catch/6735747/20aowe2/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ uid: uid })
+      })
+      .then(res => {
+        if (res.ok) {
+          statusEl.textContent = "✅ Confirmed successfully!";
+        } else {
+          statusEl.textContent = "⚠️ Something went wrong contacting Zapier.";
+        }
+      })
+      .catch(err => {
+        statusEl.textContent = "⚠️ Network error.";
+        console.error("Zapier error:", err);
+      });
+    }
+  </script>
+</body>
+</html>
