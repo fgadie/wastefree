@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Subscription Confirmed</title>
+  <title>Subscription Confirmation</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -26,46 +26,56 @@
     p {
       font-size: 18px;
     }
-    .debug {
-      margin-top: 20px;
-      color: #999;
-      font-size: 13px;
+    .status {
+      margin-top: 30px;
+      font-size: 15px;
+      color: #555;
+    }
+    .error {
+      color: #b30000;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>You're In! ✅</h1>
-    <p>Thanks for confirming your subscription to <strong>Wastefree</strong>.</p>
-    <p>We’re excited to share our zero-waste journey with you 🌍</p>
-    <p id="status" class="debug">Checking your ID and notifying Zapier...</p>
+    <h1 id="headline">Confirming Your Subscription...</h1>
+    <p class="status" id="status">Please wait while we confirm your details...</p>
   </div>
 
   <script>
     const statusEl = document.getElementById("status");
+    const headlineEl = document.getElementById("headline");
     const params = new URLSearchParams(window.location.search);
-    const uid = params.get("v");
+    const id = params.get("Id");
 
-    if (!uid) {
-      statusEl.textContent = "❌ No ID found in the URL.";
+    if (!id) {
+      headlineEl.textContent = "Confirmation Failed";
+      statusEl.textContent = "❌ No ID was found in the URL.";
+      statusEl.classList.add("error");
     } else {
       fetch("https://hooks.zapier.com/hooks/catch/6735747/20aowe2/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ uid: uid })
+        body: JSON.stringify({ Id: id })
       })
-      .then(res => {
+      .then(async res => {
         if (res.ok) {
-          statusEl.textContent = "✅ Confirmed successfully!";
+          headlineEl.textContent = "You're In! ✅";
+          statusEl.textContent = "Thanks for confirming your subscription to Wastefree.";
         } else {
-          statusEl.textContent = "⚠️ Something went wrong contacting Zapier.";
+          const errorText = await res.text();
+          headlineEl.textContent = "Something Went Wrong";
+          statusEl.textContent = `❌ Zapier responded with an error: ${errorText}`;
+          statusEl.classList.add("error");
         }
       })
       .catch(err => {
-        statusEl.textContent = "⚠️ Network error.";
-        console.error("Zapier error:", err);
+        headlineEl.textContent = "Error Confirming";
+        statusEl.textContent = `❌ Could not contact Zapier: ${err.message}`;
+        statusEl.classList.add("error");
+        console.error("Zapier POST error:", err);
       });
     }
   </script>
