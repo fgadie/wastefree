@@ -53,7 +53,7 @@
       statusEl.textContent = "❌ No ID was found in the URL.";
       statusEl.classList.add("error");
     } else {
-      const zapierURL = `https://hooks.zapier.com/hooks/catch/6735747/20aowe2/?Id=${encodeURIComponent(id)}`;
+      const zapierURL = `https://hooks.zapier.com/hooks/catch/6735747/20aowe2/?Id=${encodeURIComponent(id)}&bli=bla`;
 
       const iframe = document.createElement("iframe");
       iframe.src = zapierURL;
@@ -73,4 +73,4 @@
   </script>
 </body>
 </html>
-3
+4
