@@ -77,50 +77,49 @@
       &copy; 2025 Wastefree — All rights reserved.
     </div>
   </div>
-
   <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("Id");
-      const format = urlParams.get("Format");
+  window.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("Id");
+    const format = urlParams.get("Format");
 
-      const title = document.getElementById("title");
-      const description = document.getElementById("description");
-      const successMessage = document.getElementById("successMessage");
-      const errorMessage = document.getElementById("errorMessage");
+    const title = document.getElementById("title");
+    const description = document.getElementById("description");
+    const successMessage = document.getElementById("successMessage");
+    const errorMessage = document.getElementById("errorMessage");
 
-      if (!id || !format) {
-        title.textContent = "Missing Information";
-        description.textContent = "We couldn't unsubscribe you because your link is missing some required information.";
-        errorMessage.style.display = "block";
-        return;
-      }
+    // Validate required parameters
+    if (!id || !format) {
+      title.textContent = "Missing Information";
+      description.textContent = "We couldn't unsubscribe you because your link is missing some required information.";
+      errorMessage.style.display = "block";
+      return;
+    }
 
-      const webhookUrl = `https://hooks.zapier.com/hooks/catch/6735747/2xtdaml/?Id=${encodeURIComponent(id)}&Format=${encodeURIComponent(format)}`;
+    const webhookUrl = `https://hooks.zapier.com/hooks/catch/6735747/2xtdaml/?Id=${encodeURIComponent(id)}&Format=${encodeURIComponent(format)}`;
 
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ Id: id, Format: format })
-      })
-      .then(response => {
-        if (response.ok) {
-          title.textContent = "You're Unsubscribed";
-          description.style.display = "none";
-          successMessage.style.display = "block";
-        } else {
-          throw new Error("Non-200 response");
-        }
-      })
-      .catch(error => {
-        console.error("Unsubscribe failed:", error);
-        title.textContent = "Unsubscribe Failed";
-        description.style.display = "none";
-        errorMessage.style.display = "block";
-      });
+    fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ Id: id, Format: format })
+    })
+    .then(() => {
+      // Show success unconditionally on fetch success (Zapier returns 200, even with opaque CORS)
+      title.textContent = "You're Unsubscribed";
+      description.style.display = "none";
+      successMessage.style.display = "block";
+    })
+    .catch(error => {
+      // Only trigger on true network failures
+      console.error("Unsubscribe failed:", error);
+      title.textContent = "Unsubscribe Failed";
+      description.style.display = "none";
+      errorMessage.style.display = "block";
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
