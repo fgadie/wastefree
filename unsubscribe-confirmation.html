@@ -88,7 +88,6 @@
     const successMessage = document.getElementById("successMessage");
     const errorMessage = document.getElementById("errorMessage");
 
-    // Validate required parameters
     if (!id || !format) {
       title.textContent = "Missing Information";
       description.textContent = "We couldn't unsubscribe you because your link is missing some required information.";
@@ -98,28 +97,20 @@
 
     const webhookUrl = `https://hooks.zapier.com/hooks/catch/6735747/2xtdaml/?Id=${encodeURIComponent(id)}&Format=${encodeURIComponent(format)}`;
 
-    fetch(webhookUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ Id: id, Format: format })
-    })
-    .then(() => {
-      // Show success unconditionally on fetch success (Zapier returns 200, even with opaque CORS)
-      title.textContent = "You're Unsubscribed";
-      description.style.display = "none";
-      successMessage.style.display = "block";
-    })
-    .catch(error => {
-      // Only trigger on true network failures
-      console.error("Unsubscribe failed:", error);
-      title.textContent = "Unsubscribe Failed";
-      description.style.display = "none";
-      errorMessage.style.display = "block";
-    });
+    // Use GET without headers/body to bypass CORS preflight
+    fetch(webhookUrl)
+      .then(() => {
+        title.textContent = "You're Unsubscribed";
+        description.style.display = "none";
+        successMessage.style.display = "block";
+      })
+      .catch(error => {
+        console.error("Unsubscribe failed:", error);
+        title.textContent = "Unsubscribe Failed";
+        description.style.display = "none";
+        errorMessage.style.display = "block";
+      });
   });
 </script>
-
 </body>
 </html>
