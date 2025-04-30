@@ -142,6 +142,67 @@
       };
       document.body.appendChild(iframe);
     }
-  </script>
+    function createContactForm() {
+    const formContainer = document.createElement("div");
+    formContainer.innerHTML = `
+      <h2 style="margin-top: 40px;">Provide Additional Information</h2>
+      <form id="contactForm" style="margin-top: 20px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;">
+        <label for="address">Address:</label><br/>
+        <input type="text" id="address" name="address" required style="width: 100%; padding: 8px; margin-bottom: 10px;"/><br/>
+        
+        <label for="mobile">Mobile Number:</label><br/>
+        <input type="tel" id="mobile" name="mobile" required style="width: 100%; padding: 8px; margin-bottom: 20px;"/><br/>
+        
+        <button type="submit" style="padding: 10px 20px; background-color: #001eb3; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          Submit
+        </button>
+        <p id="formStatus" style="margin-top: 15px;"></p>
+      </form>
+    `;
+    document.querySelector(".container").appendChild(formContainer);
+
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const address = document.getElementById("address").value;
+      const mobile = document.getElementById("mobile").value;
+
+      const payload = {
+        Id: id,
+        address: address,
+        mobile: mobile
+      };
+
+      fetch("https://hooks.zapier.com/hooks/catch/6735747/2paoc9l/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (response.ok) {
+          document.getElementById("formStatus").textContent = "Thank you! Your information has been submitted.";
+          document.getElementById("formStatus").style.color = "green";
+        } else {
+          throw new Error("Failed to submit");
+        }
+      })
+      .catch(error => {
+        document.getElementById("formStatus").textContent = "There was an error submitting your information. Please try again.";
+        document.getElementById("formStatus").style.color = "red";
+      });
+    });
+  }
+
+  // Show form only on successful confirmation
+  if (id) {
+    const checkIframe = setInterval(() => {
+      if (headlineEl.textContent === t.successTitle) {
+        clearInterval(checkIframe);
+        createContactForm();
+      }
+    }, 500);
+  }
+</script>
 </body>
 </html>
