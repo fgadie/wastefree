@@ -52,22 +52,22 @@
     }
     form {
       text-align: left;
-      margin: 25px auto 0;
+      margin: 20px auto 0;
       max-width: 600px;
     }
     form label {
-      font-size: 16px;
-      margin-bottom: 3px;
+      font-size: 14px;
+      margin-bottom: 2px;
       display: block;
     }
     form input {
       width: 100%;
-      padding: 7px;
+      padding: 6px;
       font-size: 15px;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .form-row {
       display: flex;
@@ -77,8 +77,8 @@
       flex: 1;
     }
     #formStatus {
-      font-size: 16px;
-      margin-top: 12px;
+      font-size: 15px;
+      margin-top: 10px;
     }
     .submit-wrapper {
       text-align: center;
@@ -93,7 +93,6 @@
       font-size: 16px;
       cursor: pointer;
     }
-
     @media (max-width: 600px) {
       .form-row {
         flex-direction: column;
@@ -158,50 +157,11 @@
         successSubmit: "Vielen Dank! Ihre Daten wurden übermittelt.",
         errorSubmit: "Fehler beim Absenden. Bitte versuchen Sie es erneut.",
         invalidPhone: "Bitte geben Sie eine gültige Mobilnummer ein."
-      },
-      fr: {
-        initialTitle: "Confirmation de votre inscription...",
-        initialStatus: "Veuillez patienter pendant la vérification de vos informations.",
-        successTitle: "Inscription confirmée",
-        successStatus: "Merci d’avoir confirmé votre inscription. Vous recevrez désormais les actualités de Wastefree. Si vous souhaitez compléter vos données, veuillez remplir ce formulaire.",
-        errorTitle: "Échec de la confirmation",
-        errorStatus: "Nous n'avons pas pu confirmer votre inscription. Veuillez réessayer plus tard ou nous contacter.",
-        missingTitle: "Requête incomplète",
-        missingStatus: "Impossible de traiter votre confirmation. Il manque un paramètre dans le lien.",
-        street: "Rue + No :",
-        zip: "Code postal :",
-        city: "Ville :",
-        country: "Pays :",
-        phone: "Numéro de mobile :",
-        submit: "Soumettre",
-        successSubmit: "Merci ! Vos informations ont été soumises.",
-        errorSubmit: "Erreur lors de la soumission. Veuillez réessayer.",
-        invalidPhone: "Veuillez entrer un numéro valide."
-      },
-      it: {
-        initialTitle: "Conferma della tua iscrizione...",
-        initialStatus: "Attendere mentre verifichiamo le informazioni.",
-        successTitle: "Iscrizione confermata",
-        successStatus: "Grazie per aver confermato la tua iscrizione. Riceverai presto le comunicazioni di Wastefree. Se desideri completare i tuoi dati, compila questo modulo.",
-        errorTitle: "Conferma non riuscita",
-        errorStatus: "Non siamo riusciti a confermare la tua iscrizione. Riprova più tardi o contattaci.",
-        missingTitle: "Richiesta incompleta",
-        missingStatus: "Non è stato possibile completare la conferma. Parametro del link mancante.",
-        street: "Via + numero:",
-        zip: "CAP:",
-        city: "Città:",
-        country: "Paese:",
-        phone: "Numero di cellulare:",
-        submit: "Invia",
-        successSubmit: "Grazie! I tuoi dati sono stati inviati.",
-        errorSubmit: "Errore nell'invio dei dati. Riprova.",
-        invalidPhone: "Inserisci un numero valido."
       }
+      // You can add fr and it translations here if needed
     };
 
     const t = translations[lang] || translations.en;
-    headlineEl.textContent = t.initialTitle;
-    statusEl.textContent = t.initialStatus;
 
     if (!id) {
       headlineEl.textContent = t.missingTitle;
@@ -215,6 +175,7 @@
       iframe.onload = () => {
         headlineEl.textContent = t.successTitle;
         statusEl.textContent = t.successStatus;
+        createContactForm(t); // pass translation!
       };
       iframe.onerror = () => {
         headlineEl.textContent = t.errorTitle;
@@ -224,13 +185,12 @@
       document.body.appendChild(iframe);
     }
 
-    function createContactForm() {
+    function createContactForm(t) {
       const formContainer = document.createElement("div");
       formContainer.innerHTML = `
         <form id="contactForm">
           <label>${t.street}</label>
           <input type="text" id="street" required />
-
           <div class="form-row">
             <div>
               <label>${t.zip}</label>
@@ -241,13 +201,10 @@
               <input type="text" id="city" required />
             </div>
           </div>
-
           <label>${t.country}</label>
           <input type="text" id="country" required />
-
           <label>${t.phone}</label>
           <input type="tel" id="mobile" required />
-
           <div class="submit-wrapper">
             <button type="submit">${t.submit}</button>
           </div>
@@ -297,15 +254,6 @@
           statusMsg.style.color = "red";
         });
       });
-    }
-
-    if (id) {
-      const checkIframe = setInterval(() => {
-        if (headlineEl.textContent === t.successTitle) {
-          clearInterval(checkIframe);
-          createContactForm();
-        }
-      }, 500);
     }
   </script>
 
