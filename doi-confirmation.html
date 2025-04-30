@@ -158,7 +158,6 @@
         errorSubmit: "Fehler beim Absenden. Bitte versuchen Sie es erneut.",
         invalidPhone: "Bitte geben Sie eine gültige Mobilnummer ein."
       }
-      // You can add fr and it translations here if needed
     };
 
     const t = translations[lang] || translations.en;
@@ -175,7 +174,7 @@
       iframe.onload = () => {
         headlineEl.textContent = t.successTitle;
         statusEl.textContent = t.successStatus;
-        createContactForm(t); // pass translation!
+        createContactForm(t);
       };
       iframe.onerror = () => {
         headlineEl.textContent = t.errorTitle;
@@ -215,7 +214,6 @@
 
       document.getElementById("contactForm").addEventListener("submit", function (e) {
         e.preventDefault();
-
         const phoneInput = document.getElementById("mobile").value;
         let phone;
         try {
@@ -229,30 +227,26 @@
           return;
         }
 
-        const payload = {
-          Id: id,
-          street: document.getElementById("street").value,
-          zip: document.getElementById("zip").value,
-          city: document.getElementById("city").value,
-          country: document.getElementById("country").value,
-          mobile: phone.number
-        };
+        const url = new URL("https://hooks.zapier.com/hooks/catch/6735747/2paoc9l/");
+        url.searchParams.set("Id", id);
+        url.searchParams.set("street", document.getElementById("street").value);
+        url.searchParams.set("zip", document.getElementById("zip").value);
+        url.searchParams.set("city", document.getElementById("city").value);
+        url.searchParams.set("country", document.getElementById("country").value);
+        url.searchParams.set("mobile", phone.number);
 
-        fetch("https://hooks.zapier.com/hooks/catch/6735747/2paoc9l/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        }).then(res => {
-          if (res.ok) {
-            statusMsg.textContent = t.successSubmit;
-            statusMsg.style.color = "green";
-          } else {
-            throw new Error();
-          }
-        }).catch(() => {
+        const iframe = document.createElement("iframe");
+        iframe.src = url.toString();
+        iframe.style.display = "none";
+        iframe.onload = () => {
+          statusMsg.textContent = t.successSubmit;
+          statusMsg.style.color = "green";
+        };
+        iframe.onerror = () => {
           statusMsg.textContent = t.errorSubmit;
           statusMsg.style.color = "red";
-        });
+        };
+        document.body.appendChild(iframe);
       });
     }
   </script>
