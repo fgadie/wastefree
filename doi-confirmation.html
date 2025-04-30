@@ -93,6 +93,12 @@
       font-size: 16px;
       cursor: pointer;
     }
+
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;
+      }
+    }
   </style>
   <script src="https://unpkg.com/libphonenumber-js@1.10.24/bundle/libphonenumber-max.js"></script>
 </head>
@@ -112,7 +118,7 @@
 
     const params = new URLSearchParams(window.location.search);
     const id = params.get("Id");
-    const lang = params.get("lan") || "en";
+    const lang = (params.get("lan") || "en").toLowerCase();
 
     const translations = {
       en: {
@@ -133,6 +139,63 @@
         successSubmit: "Thank you! Your information has been submitted.",
         errorSubmit: "There was an error submitting your information. Please try again.",
         invalidPhone: "Please enter a valid mobile number."
+      },
+      de: {
+        initialTitle: "Bestätigung Ihrer Anmeldung...",
+        initialStatus: "Einen Moment bitte, wir überprüfen Ihre Angaben.",
+        successTitle: "Anmeldung bestätigt",
+        successStatus: "Vielen Dank für Ihre Bestätigung. Sie erhalten ab sofort Updates von Wastefree. Wenn Sie Ihre Daten vervollständigen möchten, füllen Sie bitte dieses Formular aus.",
+        errorTitle: "Bestätigung fehlgeschlagen",
+        errorStatus: "Wir konnten Ihre Anmeldung derzeit nicht bestätigen. Bitte versuchen Sie es später erneut oder kontaktieren Sie uns.",
+        missingTitle: "Unvollständige Anfrage",
+        missingStatus: "Die Bestätigung konnte nicht durchgeführt werden, da ein erforderlicher Linkparameter fehlt.",
+        street: "Straße + Nr.:",
+        zip: "PLZ:",
+        city: "Ort:",
+        country: "Land:",
+        phone: "Mobilnummer:",
+        submit: "Absenden",
+        successSubmit: "Vielen Dank! Ihre Daten wurden übermittelt.",
+        errorSubmit: "Fehler beim Absenden. Bitte versuchen Sie es erneut.",
+        invalidPhone: "Bitte geben Sie eine gültige Mobilnummer ein."
+      },
+      fr: {
+        initialTitle: "Confirmation de votre inscription...",
+        initialStatus: "Veuillez patienter pendant la vérification de vos informations.",
+        successTitle: "Inscription confirmée",
+        successStatus: "Merci d’avoir confirmé votre inscription. Vous recevrez désormais les actualités de Wastefree. Si vous souhaitez compléter vos données, veuillez remplir ce formulaire.",
+        errorTitle: "Échec de la confirmation",
+        errorStatus: "Nous n'avons pas pu confirmer votre inscription. Veuillez réessayer plus tard ou nous contacter.",
+        missingTitle: "Requête incomplète",
+        missingStatus: "Impossible de traiter votre confirmation. Il manque un paramètre dans le lien.",
+        street: "Rue + No :",
+        zip: "Code postal :",
+        city: "Ville :",
+        country: "Pays :",
+        phone: "Numéro de mobile :",
+        submit: "Soumettre",
+        successSubmit: "Merci ! Vos informations ont été soumises.",
+        errorSubmit: "Erreur lors de la soumission. Veuillez réessayer.",
+        invalidPhone: "Veuillez entrer un numéro valide."
+      },
+      it: {
+        initialTitle: "Conferma della tua iscrizione...",
+        initialStatus: "Attendere mentre verifichiamo le informazioni.",
+        successTitle: "Iscrizione confermata",
+        successStatus: "Grazie per aver confermato la tua iscrizione. Riceverai presto le comunicazioni di Wastefree. Se desideri completare i tuoi dati, compila questo modulo.",
+        errorTitle: "Conferma non riuscita",
+        errorStatus: "Non siamo riusciti a confermare la tua iscrizione. Riprova più tardi o contattaci.",
+        missingTitle: "Richiesta incompleta",
+        missingStatus: "Non è stato possibile completare la conferma. Parametro del link mancante.",
+        street: "Via + numero:",
+        zip: "CAP:",
+        city: "Città:",
+        country: "Paese:",
+        phone: "Numero di cellulare:",
+        submit: "Invia",
+        successSubmit: "Grazie! I tuoi dati sono stati inviati.",
+        errorSubmit: "Errore nell'invio dei dati. Riprova.",
+        invalidPhone: "Inserisci un numero valido."
       }
     };
 
