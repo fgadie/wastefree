@@ -45,29 +45,78 @@
   <script>
     const statusEl = document.getElementById("status");
     const headlineEl = document.getElementById("headline");
+
     const params = new URLSearchParams(window.location.search);
     const id = params.get("Id");
+    const lang = params.get("lan") || "en";
+
+    const translations = {
+      en: {
+        initialTitle: "Confirming Your Subscription...",
+        initialStatus: "Please wait while we confirm your details...",
+        successTitle: "You're In! ✅",
+        successStatus: "Thanks for confirming your subscription to Wastefree.",
+        errorTitle: "Subscription Confirmation Error",
+        errorStatus: "⚠️ Could not notify our system. Please try again later.",
+        missingTitle: "Confirmation Failed",
+        missingStatus: "❌ No ID was found in the URL."
+      },
+      de: {
+        initialTitle: "Bestätige deine Anmeldung...",
+        initialStatus: "Bitte warte, während wir deine Daten verarbeiten...",
+        successTitle: "Du bist dabei! ✅",
+        successStatus: "Danke für deine Bestätigung. Willkommen bei Wastefree!",
+        errorTitle: "Fehler bei der Bestätigung",
+        errorStatus: "⚠️ Wir konnten dein Abo nicht bestätigen. Bitte versuche es später erneut.",
+        missingTitle: "Bestätigung fehlgeschlagen",
+        missingStatus: "❌ Es fehlt eine ID in der URL."
+      },
+      fr: {
+        initialTitle: "Confirmation de votre abonnement...",
+        initialStatus: "Veuillez patienter pendant la confirmation...",
+        successTitle: "C’est confirmé ! ✅",
+        successStatus: "Merci d’avoir confirmé votre abonnement à Wastefree.",
+        errorTitle: "Erreur de confirmation",
+        errorStatus: "⚠️ Impossible de confirmer. Veuillez réessayer plus tard.",
+        missingTitle: "Confirmation échouée",
+        missingStatus: "❌ L'ID est manquante dans l'URL."
+      },
+      it: {
+        initialTitle: "Conferma della sottoscrizione...",
+        initialStatus: "Attendi mentre confermiamo i tuoi dati...",
+        successTitle: "Iscrizione confermata ✅",
+        successStatus: "Grazie per aver confermato la tua iscrizione a Wastefree.",
+        errorTitle: "Errore di conferma",
+        errorStatus: "⚠️ Impossibile completare la conferma. Riprova più tardi.",
+        missingTitle: "Conferma non riuscita",
+        missingStatus: "❌ Nessun ID trovato nell'URL."
+      }
+    };
+
+    const t = translations[lang] || translations.en;
+
+    // Set initial text
+    headlineEl.textContent = t.initialTitle;
+    statusEl.textContent = t.initialStatus;
 
     if (!id) {
-      headlineEl.textContent = "Confirmation Failed";
-      statusEl.textContent = "❌ No ID was found in the URL.";
+      headlineEl.textContent = t.missingTitle;
+      statusEl.textContent = t.missingStatus;
       statusEl.classList.add("error");
     } else {
       const zapierURL = `https://hooks.zapier.com/hooks/catch/6735747/20aowe2/?Id=${encodeURIComponent(id)}`;
-
       const iframe = document.createElement("iframe");
       iframe.src = zapierURL;
       iframe.style.display = "none";
       iframe.onload = () => {
-        headlineEl.textContent = "You're In! ✅";
-        statusEl.textContent = "Thanks for confirming your subscription to Wastefree.";
+        headlineEl.textContent = t.successTitle;
+        statusEl.textContent = t.successStatus;
       };
       iframe.onerror = () => {
-        headlineEl.textContent = "Subscription Confirmation Error";
-        statusEl.textContent = "⚠️ Could not notify our system. Please try again later.";
+        headlineEl.textContent = t.errorTitle;
+        statusEl.textContent = t.errorStatus;
         statusEl.classList.add("error");
       };
-
       document.body.appendChild(iframe);
     }
   </script>
