@@ -3,24 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Unsubscribed – Wastefree</title>
+  <title>Unsubscribe – Wastefree</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f6fb;
-      margin: 0;
-      padding: 0;
       color: #333;
+      margin: 0;
+      padding: 60px 20px;
+      text-align: center;
     }
     .container {
       max-width: 700px;
-      margin: 60px auto;
+      margin: auto;
       background-color: #ffffff;
       border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-      text-align: center;
       padding: 40px 30px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     }
     .logo {
       margin-bottom: 30px;
@@ -29,23 +28,19 @@
       max-width: 160px;
     }
     h1 {
-      color: #001eb3;
       font-size: 28px;
+      color: #001eb3;
       margin-bottom: 20px;
     }
     p {
-      font-size: 18px;
+      font-size: 17px;
       line-height: 1.6;
-      color: #555;
-    }
-    .footer {
-      margin-top: 40px;
-      font-size: 13px;
-      color: #999;
+      margin: 0;
     }
     .message {
       display: none;
-      font-size: 18px;
+      font-size: 16px;
+      line-height: 1.5;
       margin-top: 30px;
     }
     .success {
@@ -53,6 +48,11 @@
     }
     .error {
       color: #c62828;
+    }
+    .footer {
+      margin-top: 50px;
+      font-size: 13px;
+      color: #999;
     }
   </style>
 </head>
@@ -63,22 +63,17 @@
     </div>
 
     <h1 id="title">Processing your request...</h1>
-    <p id="description">Please wait while we unsubscribe you from Wastefree updates.</p>
+    <p id="description">Please wait while we unsubscribe you from future Wastefree updates.</p>
 
-    <div id="successMessage" class="message success">
-      ✅ You’ve been unsubscribed from Wastefree emails. We're sad to see you go — but thank you for being part of the journey 💚.
-    </div>
-
-    <div id="errorMessage" class="message error">
-      ❌ We couldn’t complete your unsubscribe request. Please try again later or contact us for help.
-    </div>
+    <div id="successMessage" class="message success"></div>
+    <div id="errorMessage" class="message error"></div>
 
     <div class="footer">
       &copy; 2025 Wastefree — All rights reserved.
     </div>
   </div>
+
   <script>
-  window.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("Id");
     const format = urlParams.get("Format");
@@ -87,43 +82,43 @@
     const translations = {
       en: {
         title: "Processing your request...",
-        description: "Please wait while we unsubscribe you from Wastefree updates.",
-        successTitle: "You're Unsubscribed",
-        successMessage: "✅ You’ve been unsubscribed from Wastefree emails. We're sad to see you go — but thank you for being part of the journey 💚.",
-        errorTitle: "Unsubscribe Failed",
-        errorMessage: "❌ We couldn’t complete your unsubscribe request. Please try again later or contact us for help.",
-        missingTitle: "Missing Information",
-        missingDescription: "We couldn't unsubscribe you because your link is missing some required information."
+        description: "Please wait while we unsubscribe you from future Wastefree updates.",
+        successTitle: "You’ve been unsubscribed",
+        successMessage: "You’ve been successfully removed from our mailing list. If you change your mind, you can re-subscribe anytime through our website.",
+        errorTitle: "Unsubscribe failed",
+        errorMessage: "We were unable to process your unsubscribe request at this time. Please try again later or contact our support team.",
+        missingTitle: "Missing information",
+        missingDescription: "Your unsubscribe request could not be processed because the link is missing required details."
       },
       de: {
-        title: "Wir verarbeiten deine Anfrage...",
-        description: "Bitte warte einen Moment, während wir dich von Wastefree-E-Mails abmelden.",
+        title: "Deine Anfrage wird bearbeitet...",
+        description: "Bitte warte, während wir dich von zukünftigen Wastefree-Mitteilungen abmelden.",
         successTitle: "Du wurdest abgemeldet",
-        successMessage: "✅ Du wurdest erfolgreich von Wastefree-E-Mails abgemeldet. Schade, dich gehen zu sehen — danke, dass du Teil der Reise warst 💚.",
+        successMessage: "Du wurdest erfolgreich von unserer Mailingliste entfernt. Wenn du es dir anders überlegst, kannst du dich jederzeit erneut anmelden.",
         errorTitle: "Abmeldung fehlgeschlagen",
-        errorMessage: "❌ Die Abmeldung konnte nicht durchgeführt werden. Bitte versuche es später erneut oder kontaktiere uns.",
+        errorMessage: "Deine Abmeldung konnte derzeit nicht verarbeitet werden. Bitte versuche es später erneut oder kontaktiere unseren Support.",
         missingTitle: "Fehlende Informationen",
-        missingDescription: "Die Abmeldung konnte nicht erfolgen, da einige Informationen im Link fehlen."
+        missingDescription: "Die Abmeldung konnte nicht durchgeführt werden, da im Link Informationen fehlen."
       },
       fr: {
         title: "Traitement de votre demande...",
-        description: "Merci de patienter pendant que nous vous désabonnons des e-mails Wastefree.",
-        successTitle: "Vous êtes désabonné",
-        successMessage: "✅ Vous avez été désabonné avec succès des e-mails Wastefree. Dommage de vous voir partir — merci de nous avoir accompagnés 💚.",
-        errorTitle: "Échec du désabonnement",
-        errorMessage: "❌ Nous n'avons pas pu traiter votre demande. Veuillez réessayer plus tard ou nous contacter.",
+        description: "Veuillez patienter pendant que nous vous désabonnons des communications de Wastefree.",
+        successTitle: "Désinscription réussie",
+        successMessage: "Vous avez été retiré de notre liste de diffusion. Vous pouvez vous réabonner à tout moment via notre site.",
+        errorTitle: "Échec de la désinscription",
+        errorMessage: "Nous n'avons pas pu traiter votre demande. Veuillez réessayer plus tard ou contacter notre support.",
         missingTitle: "Informations manquantes",
-        missingDescription: "Nous n'avons pas pu vous désabonner car certaines informations sont manquantes dans le lien."
+        missingDescription: "Nous ne pouvons pas traiter votre demande car certaines informations sont manquantes dans le lien."
       },
       it: {
-        title: "Elaborazione della tua richiesta...",
-        description: "Attendi mentre ti rimuoviamo dalla mailing list di Wastefree.",
-        successTitle: "Sei stato disiscritto",
-        successMessage: "✅ Sei stato rimosso con successo dalle email di Wastefree. Ci dispiace vederti andare — grazie per aver fatto parte del nostro percorso 💚.",
+        title: "Elaborazione della richiesta...",
+        description: "Attendi mentre ti rimuoviamo dalle future comunicazioni di Wastefree.",
+        successTitle: "Disiscrizione completata",
+        successMessage: "Sei stato rimosso dalla nostra mailing list. Puoi iscriverti di nuovo in qualsiasi momento dal nostro sito.",
         errorTitle: "Errore di disiscrizione",
-        errorMessage: "❌ Non siamo riusciti a completare la tua richiesta. Riprova più tardi o contattaci.",
+        errorMessage: "Non siamo riusciti a completare la disiscrizione. Riprova più tardi o contatta il nostro supporto.",
         missingTitle: "Informazioni mancanti",
-        missingDescription: "Non possiamo disiscriverti perché mancano alcune informazioni nel link."
+        missingDescription: "Non possiamo completare la richiesta. Mancano informazioni essenziali nel link."
       }
     };
 
@@ -137,6 +132,7 @@
     if (!id || !format) {
       title.textContent = t.missingTitle;
       description.textContent = t.missingDescription;
+      errorMessage.textContent = t.errorMessage;
       errorMessage.style.display = "block";
       return;
     }
@@ -147,21 +143,20 @@
       .then(() => {
         title.textContent = t.successTitle;
         description.style.display = "none";
-        successMessage.innerHTML = t.successMessage;
+        successMessage.textContent = t.successMessage;
         successMessage.style.display = "block";
       })
       .catch(error => {
         console.error("Unsubscribe failed:", error);
         title.textContent = t.errorTitle;
         description.style.display = "none";
-        errorMessage.innerHTML = t.errorMessage;
+        errorMessage.textContent = t.errorMessage;
         errorMessage.style.display = "block";
       });
-    
-    // Always set base UI strings
+
+    // Set base UI copy
     title.textContent = t.title;
     description.textContent = t.description;
-  });
-</script>
+  </script>
 </body>
 </html>
