@@ -134,9 +134,7 @@
       description.textContent = t.missingDescription;
       errorMessage.textContent = t.errorMessage;
       errorMessage.style.display = "block";
-      return;
-    }
-
+    } else {
     const webhookUrl = `https://hooks.zapier.com/hooks/catch/6735747/2xtdaml/?Id=${encodeURIComponent(id)}&Format=${encodeURIComponent(format)}`;
 
     fetch(webhookUrl)
@@ -158,8 +156,8 @@
         errorMessage.textContent = t.errorMessage;
         errorMessage.style.display = "block";
       });
-
-    // Set base UI copy
+    }
+    
     title.textContent = t.title;
     description.textContent = t.description;
   </script>
