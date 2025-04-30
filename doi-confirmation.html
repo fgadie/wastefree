@@ -52,21 +52,22 @@
     }
     form {
       text-align: left;
-      margin: 30px auto 0;
+      margin: 25px auto 0;
       max-width: 600px;
     }
     form label {
       font-size: 16px;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
       display: block;
     }
     form input {
       width: 100%;
-      padding: 8px;
+      padding: 7px;
       font-size: 15px;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
+      margin-bottom: 10px;
     }
     .form-row {
       display: flex;
@@ -77,15 +78,18 @@
     }
     #formStatus {
       font-size: 16px;
-      margin-top: 15px;
+      margin-top: 12px;
+    }
+    .submit-wrapper {
+      text-align: center;
+      margin-top: 10px;
     }
     button {
-      margin-top: 15px;
-      padding: 10px 20px;
+      padding: 10px 25px;
       background-color: #001eb3;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 25px;
       font-size: 16px;
       cursor: pointer;
     }
@@ -129,8 +133,7 @@
         successSubmit: "Thank you! Your information has been submitted.",
         errorSubmit: "There was an error submitting your information. Please try again.",
         invalidPhone: "Please enter a valid mobile number."
-      },
-      // Add other language blocks here if needed (de, fr, it)
+      }
     };
 
     const t = translations[lang] || translations.en;
@@ -162,11 +165,10 @@
       const formContainer = document.createElement("div");
       formContainer.innerHTML = `
         <form id="contactForm">
-          <div style="margin-bottom: 15px;">
-            <label>${t.street}</label>
-            <input type="text" id="street" required />
-          </div>
-          <div class="form-row" style="margin-bottom: 15px;">
+          <label>${t.street}</label>
+          <input type="text" id="street" required />
+
+          <div class="form-row">
             <div>
               <label>${t.zip}</label>
               <input type="text" id="zip" required />
@@ -176,15 +178,16 @@
               <input type="text" id="city" required />
             </div>
           </div>
-          <div style="margin-bottom: 15px;">
-            <label>${t.country}</label>
-            <input type="text" id="country" required />
+
+          <label>${t.country}</label>
+          <input type="text" id="country" required />
+
+          <label>${t.phone}</label>
+          <input type="tel" id="mobile" required />
+
+          <div class="submit-wrapper">
+            <button type="submit">${t.submit}</button>
           </div>
-          <div style="margin-bottom: 15px;">
-            <label>${t.phone}</label>
-            <input type="tel" id="mobile" required />
-          </div>
-          <button type="submit">${t.submit}</button>
           <p id="formStatus"></p>
         </form>
       `;
