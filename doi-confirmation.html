@@ -19,7 +19,7 @@
       background-color: #ffffff;
       padding: 40px 30px;
       border-radius: 10px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     }
     .logo {
       margin-bottom: 30px;
@@ -30,21 +30,23 @@
     h1 {
       color: #001eb3;
       font-size: 28px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     p {
-      font-size: 18px;
+      font-size: 17px;
+      line-height: 1.6;
+      margin: 0;
     }
     .status {
       margin-top: 30px;
-      font-size: 15px;
+      font-size: 16px;
       color: #555;
     }
     .error {
-      color: #b30000;
+      color: #c62828;
     }
     .footer {
-      margin-top: 40px;
+      margin-top: 50px;
       font-size: 13px;
       color: #999;
     }
@@ -57,7 +59,7 @@
     </div>
 
     <h1 id="headline">Confirming Your Subscription...</h1>
-    <p class="status" id="status">Please wait while we confirm your details...</p>
+    <p class="status" id="status">Please wait a moment while we confirm your information.</p>
 
     <div class="footer">
       &copy; 2025 Wastefree — All rights reserved.
@@ -75,49 +77,48 @@
     const translations = {
       en: {
         initialTitle: "Confirming Your Subscription...",
-        initialStatus: "Please wait while we confirm your details...",
-        successTitle: "You're In! ✅",
-        successStatus: "Thanks for confirming your subscription to Wastefree.",
-        errorTitle: "Subscription Confirmation Error",
-        errorStatus: "⚠️ Could not notify our system. Please try again later.",
-        missingTitle: "Confirmation Failed",
-        missingStatus: "❌ No ID was found in the URL."
+        initialStatus: "Please wait a moment while we confirm your information.",
+        successTitle: "Subscription Confirmed",
+        successStatus: "Thank you for confirming your subscription. You’re now on the list and will start receiving updates from Wastefree.",
+        errorTitle: "Confirmation Failed",
+        errorStatus: "We were unable to confirm your subscription at this time. Please try again later or contact support.",
+        missingTitle: "Incomplete Request",
+        missingStatus: "We couldn't process your confirmation because a required link parameter is missing."
       },
       de: {
-        initialTitle: "Bestätige deine Anmeldung...",
-        initialStatus: "Bitte warte, während wir deine Daten verarbeiten...",
-        successTitle: "Du bist dabei! ✅",
-        successStatus: "Danke für deine Bestätigung. Willkommen bei Wastefree!",
-        errorTitle: "Fehler bei der Bestätigung",
-        errorStatus: "⚠️ Wir konnten dein Abo nicht bestätigen. Bitte versuche es später erneut.",
-        missingTitle: "Bestätigung fehlgeschlagen",
-        missingStatus: "❌ Es fehlt eine ID in der URL."
+        initialTitle: "Bestätigung Ihrer Anmeldung...",
+        initialStatus: "Einen Moment bitte, wir überprüfen Ihre Angaben.",
+        successTitle: "Anmeldung bestätigt",
+        successStatus: "Vielen Dank für Ihre Bestätigung. Sie erhalten ab sofort Updates von Wastefree.",
+        errorTitle: "Bestätigung fehlgeschlagen",
+        errorStatus: "Wir konnten Ihre Anmeldung derzeit nicht bestätigen. Bitte versuchen Sie es später erneut oder kontaktieren Sie uns.",
+        missingTitle: "Unvollständige Anfrage",
+        missingStatus: "Die Bestätigung konnte nicht durchgeführt werden, da ein erforderlicher Linkparameter fehlt."
       },
       fr: {
-        initialTitle: "Confirmation de votre abonnement...",
-        initialStatus: "Veuillez patienter pendant la confirmation...",
-        successTitle: "C’est confirmé ! ✅",
-        successStatus: "Merci d’avoir confirmé votre abonnement à Wastefree.",
-        errorTitle: "Erreur de confirmation",
-        errorStatus: "⚠️ Impossible de confirmer. Veuillez réessayer plus tard.",
-        missingTitle: "Confirmation échouée",
-        missingStatus: "❌ L'ID est manquante dans l'URL."
+        initialTitle: "Confirmation de votre inscription...",
+        initialStatus: "Veuillez patienter pendant la vérification de vos informations.",
+        successTitle: "Inscription confirmée",
+        successStatus: "Merci d’avoir confirmé votre inscription. Vous recevrez désormais les actualités de Wastefree.",
+        errorTitle: "Échec de la confirmation",
+        errorStatus: "Nous n'avons pas pu confirmer votre inscription. Veuillez réessayer plus tard ou nous contacter.",
+        missingTitle: "Requête incomplète",
+        missingStatus: "Impossible de traiter votre confirmation. Il manque un paramètre dans le lien."
       },
       it: {
-        initialTitle: "Conferma della sottoscrizione...",
-        initialStatus: "Attendi mentre confermiamo i tuoi dati...",
-        successTitle: "Iscrizione confermata ✅",
-        successStatus: "Grazie per aver confermato la tua iscrizione a Wastefree.",
-        errorTitle: "Errore di conferma",
-        errorStatus: "⚠️ Impossibile completare la conferma. Riprova più tardi.",
-        missingTitle: "Conferma non riuscita",
-        missingStatus: "❌ Nessun ID trovato nell'URL."
+        initialTitle: "Conferma della tua iscrizione...",
+        initialStatus: "Attendere mentre verifichiamo le informazioni.",
+        successTitle: "Iscrizione confermata",
+        successStatus: "Grazie per aver confermato la tua iscrizione. Riceverai presto le comunicazioni di Wastefree.",
+        errorTitle: "Conferma non riuscita",
+        errorStatus: "Non siamo riusciti a confermare la tua iscrizione. Riprova più tardi o contattaci.",
+        missingTitle: "Richiesta incompleta",
+        missingStatus: "Non è stato possibile completare la conferma. Parametro del link mancante."
       }
     };
 
     const t = translations[lang] || translations.en;
 
-    // Set initial text
     headlineEl.textContent = t.initialTitle;
     statusEl.textContent = t.initialStatus;
 
