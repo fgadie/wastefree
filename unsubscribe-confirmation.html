@@ -82,6 +82,52 @@
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("Id");
     const format = urlParams.get("Format");
+    const lang = urlParams.get("lan") || "en";
+
+    const translations = {
+      en: {
+        title: "Processing your request...",
+        description: "Please wait while we unsubscribe you from Wastefree updates.",
+        successTitle: "You're Unsubscribed",
+        successMessage: "✅ You’ve been unsubscribed from Wastefree emails. We're sad to see you go — but thank you for being part of the journey 💚.",
+        errorTitle: "Unsubscribe Failed",
+        errorMessage: "❌ We couldn’t complete your unsubscribe request. Please try again later or contact us for help.",
+        missingTitle: "Missing Information",
+        missingDescription: "We couldn't unsubscribe you because your link is missing some required information."
+      },
+      de: {
+        title: "Wir verarbeiten deine Anfrage...",
+        description: "Bitte warte einen Moment, während wir dich von Wastefree-E-Mails abmelden.",
+        successTitle: "Du wurdest abgemeldet",
+        successMessage: "✅ Du wurdest erfolgreich von Wastefree-E-Mails abgemeldet. Schade, dich gehen zu sehen — danke, dass du Teil der Reise warst 💚.",
+        errorTitle: "Abmeldung fehlgeschlagen",
+        errorMessage: "❌ Die Abmeldung konnte nicht durchgeführt werden. Bitte versuche es später erneut oder kontaktiere uns.",
+        missingTitle: "Fehlende Informationen",
+        missingDescription: "Die Abmeldung konnte nicht erfolgen, da einige Informationen im Link fehlen."
+      },
+      fr: {
+        title: "Traitement de votre demande...",
+        description: "Merci de patienter pendant que nous vous désabonnons des e-mails Wastefree.",
+        successTitle: "Vous êtes désabonné",
+        successMessage: "✅ Vous avez été désabonné avec succès des e-mails Wastefree. Dommage de vous voir partir — merci de nous avoir accompagnés 💚.",
+        errorTitle: "Échec du désabonnement",
+        errorMessage: "❌ Nous n'avons pas pu traiter votre demande. Veuillez réessayer plus tard ou nous contacter.",
+        missingTitle: "Informations manquantes",
+        missingDescription: "Nous n'avons pas pu vous désabonner car certaines informations sont manquantes dans le lien."
+      },
+      it: {
+        title: "Elaborazione della tua richiesta...",
+        description: "Attendi mentre ti rimuoviamo dalla mailing list di Wastefree.",
+        successTitle: "Sei stato disiscritto",
+        successMessage: "✅ Sei stato rimosso con successo dalle email di Wastefree. Ci dispiace vederti andare — grazie per aver fatto parte del nostro percorso 💚.",
+        errorTitle: "Errore di disiscrizione",
+        errorMessage: "❌ Non siamo riusciti a completare la tua richiesta. Riprova più tardi o contattaci.",
+        missingTitle: "Informazioni mancanti",
+        missingDescription: "Non possiamo disiscriverti perché mancano alcune informazioni nel link."
+      }
+    };
+
+    const t = translations[lang] || translations.en;
 
     const title = document.getElementById("title");
     const description = document.getElementById("description");
@@ -89,27 +135,32 @@
     const errorMessage = document.getElementById("errorMessage");
 
     if (!id || !format) {
-      title.textContent = "Missing Information";
-      description.textContent = "We couldn't unsubscribe you because your link is missing some required information.";
+      title.textContent = t.missingTitle;
+      description.textContent = t.missingDescription;
       errorMessage.style.display = "block";
       return;
     }
 
     const webhookUrl = `https://hooks.zapier.com/hooks/catch/6735747/2xtdaml/?Id=${encodeURIComponent(id)}&Format=${encodeURIComponent(format)}`;
 
-    // Use GET without headers/body to bypass CORS preflight
     fetch(webhookUrl)
       .then(() => {
-        title.textContent = "You're Unsubscribed";
+        title.textContent = t.successTitle;
         description.style.display = "none";
+        successMessage.innerHTML = t.successMessage;
         successMessage.style.display = "block";
       })
       .catch(error => {
         console.error("Unsubscribe failed:", error);
-        title.textContent = "Unsubscribe Failed";
+        title.textContent = t.errorTitle;
         description.style.display = "none";
+        errorMessage.innerHTML = t.errorMessage;
         errorMessage.style.display = "block";
       });
+    
+    // Always set base UI strings
+    title.textContent = t.title;
+    description.textContent = t.description;
   });
 </script>
 </body>
