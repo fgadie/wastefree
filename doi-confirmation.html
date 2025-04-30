@@ -82,7 +82,7 @@
     }
     .submit-wrapper {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 10px;
     }
     button {
       padding: 10px 25px;
@@ -99,7 +99,6 @@
       }
     }
   </style>
-  <script src="https://unpkg.com/libphonenumber-js@1.10.24/bundle/libphonenumber-max.js"></script>
 </head>
 <body>
   <div class="container">
@@ -136,8 +135,7 @@
         phone: "Mobile Number:",
         submit: "Submit",
         successSubmit: "Thank you! Your information has been submitted.",
-        errorSubmit: "There was an error submitting your information. Please try again.",
-        invalidPhone: "Please enter a valid mobile number."
+        errorSubmit: "There was an error submitting your information. Please try again."
       },
       de: {
         initialTitle: "Bestätigung Ihrer Anmeldung...",
@@ -155,8 +153,7 @@
         phone: "Mobilnummer:",
         submit: "Absenden",
         successSubmit: "Vielen Dank! Ihre Daten wurden übermittelt.",
-        errorSubmit: "Fehler beim Absenden. Bitte versuchen Sie es erneut.",
-        invalidPhone: "Bitte geben Sie eine gültige Mobilnummer ein."
+        errorSubmit: "Fehler beim Absenden. Bitte versuchen Sie es erneut."
       }
     };
 
@@ -214,18 +211,8 @@
 
       document.getElementById("contactForm").addEventListener("submit", function (e) {
         e.preventDefault();
-        const phoneInput = document.getElementById("mobile").value;
-        let phone;
-        try {
-          phone = libphonenumber.parsePhoneNumber(phoneInput);
-        } catch (e) {}
 
         const statusMsg = document.getElementById("formStatus");
-        if (!phone || !phone.isValid()) {
-          statusMsg.textContent = t.invalidPhone;
-          statusMsg.style.color = "red";
-          return;
-        }
 
         const url = new URL("https://hooks.zapier.com/hooks/catch/6735747/2paoc9l/");
         url.searchParams.set("Id", id);
@@ -233,7 +220,7 @@
         url.searchParams.set("zip", document.getElementById("zip").value);
         url.searchParams.set("city", document.getElementById("city").value);
         url.searchParams.set("country", document.getElementById("country").value);
-        url.searchParams.set("mobile", phone.number);
+        url.searchParams.set("mobile", document.getElementById("mobile").value);
 
         const iframe = document.createElement("iframe");
         iframe.src = url.toString();
