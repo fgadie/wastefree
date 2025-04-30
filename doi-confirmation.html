@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="margin: 0; padding: 0;">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Subscription Confirmation</title>
   <style>
     body {
@@ -11,17 +11,26 @@
       color: #333;
       text-align: center;
       padding: 60px 20px;
+      margin: 0;
     }
     .container {
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
-      background: white;
-      padding: 40px;
+      background-color: #ffffff;
+      padding: 40px 30px;
       border-radius: 10px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     }
+    .logo {
+      margin-bottom: 30px;
+    }
+    .logo img {
+      max-width: 160px;
+    }
     h1 {
       color: #001eb3;
+      font-size: 28px;
+      margin-bottom: 20px;
     }
     p {
       font-size: 18px;
@@ -34,12 +43,25 @@
     .error {
       color: #b30000;
     }
+    .footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #999;
+    }
   </style>
 </head>
 <body>
   <div class="container">
+    <div class="logo">
+      <img src="https://skux6.mjt.lu/img2/skux6/eb0f124f-dab6-47a0-a04d-60c1bf2103b5/content" alt="Wastefree Logo" />
+    </div>
+
     <h1 id="headline">Confirming Your Subscription...</h1>
     <p class="status" id="status">Please wait while we confirm your details...</p>
+
+    <div class="footer">
+      &copy; 2025 Wastefree — All rights reserved.
+    </div>
   </div>
 
   <script>
