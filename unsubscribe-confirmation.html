@@ -140,11 +140,16 @@
     const webhookUrl = `https://hooks.zapier.com/hooks/catch/6735747/2xtdaml/?Id=${encodeURIComponent(id)}&Format=${encodeURIComponent(format)}`;
 
     fetch(webhookUrl)
-      .then(() => {
-        title.textContent = t.successTitle;
-        description.style.display = "none";
-        successMessage.textContent = t.successMessage;
-        successMessage.style.display = "block";
+      .then(res => {
+        console.log("Zapier response status:", res.status);
+        if (res.ok) {
+          title.textContent = t.successTitle;
+          description.style.display = "none";
+          successMessage.textContent = t.successMessage;
+          successMessage.style.display = "block";
+        } else {
+          throw new Error("Non-OK response from Zapier");
+        }
       })
       .catch(error => {
         console.error("Unsubscribe failed:", error);
