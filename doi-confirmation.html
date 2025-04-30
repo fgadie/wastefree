@@ -50,8 +50,44 @@
       font-size: 13px;
       color: #999;
     }
-    input, select {
+    form {
+      text-align: left;
+      margin: 30px auto 0;
+      max-width: 600px;
+    }
+    form label {
       font-size: 16px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    form input {
+      width: 100%;
+      padding: 8px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+    .form-row > div {
+      flex: 1;
+    }
+    #formStatus {
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #001eb3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
     }
   </style>
   <script src="https://unpkg.com/libphonenumber-js@1.10.24/bundle/libphonenumber-max.js"></script>
@@ -79,86 +115,22 @@
         initialTitle: "Confirming Your Subscription...",
         initialStatus: "Please wait a moment while we confirm your information.",
         successTitle: "Subscription Confirmed",
-        successStatus: "Thank you for confirming your subscription. You’re now on the list and will start receiving updates from Wastefree.",
+        successStatus: "Thank you for confirming your subscription. You’re now on the list and will start receiving updates from Wastefree. If you would like to complete your data please fill out this form.",
         errorTitle: "Confirmation Failed",
         errorStatus: "We were unable to confirm your subscription at this time. Please try again later or contact support.",
         missingTitle: "Incomplete Request",
         missingStatus: "We couldn't process your confirmation because a required link parameter is missing.",
-        formTitle: "Please provide your address and mobile number",
         street: "Street + No:",
         zip: "ZIP Code:",
         city: "City:",
         country: "Country:",
-        prefix: "Country Prefix:",
         phone: "Mobile Number:",
         submit: "Submit",
         successSubmit: "Thank you! Your information has been submitted.",
         errorSubmit: "There was an error submitting your information. Please try again.",
         invalidPhone: "Please enter a valid mobile number."
       },
-      de: {
-        initialTitle: "Bestätigung Ihrer Anmeldung...",
-        initialStatus: "Einen Moment bitte, wir überprüfen Ihre Angaben.",
-        successTitle: "Anmeldung bestätigt",
-        successStatus: "Vielen Dank für Ihre Bestätigung. Sie erhalten ab sofort Updates von Wastefree.",
-        errorTitle: "Bestätigung fehlgeschlagen",
-        errorStatus: "Wir konnten Ihre Anmeldung derzeit nicht bestätigen. Bitte versuchen Sie es später erneut oder kontaktieren Sie uns.",
-        missingTitle: "Unvollständige Anfrage",
-        missingStatus: "Die Bestätigung konnte nicht durchgeführt werden, da ein erforderlicher Linkparameter fehlt.",
-        formTitle: "Bitte geben Sie Ihre Adresse und Mobilnummer an",
-        street: "Straße + Nr.:",
-        zip: "PLZ:",
-        city: "Ort:",
-        country: "Land:",
-        prefix: "Ländervorwahl:",
-        phone: "Mobilnummer:",
-        submit: "Absenden",
-        successSubmit: "Vielen Dank! Ihre Daten wurden übermittelt.",
-        errorSubmit: "Es gab einen Fehler beim Absenden Ihrer Daten. Bitte versuchen Sie es erneut.",
-        invalidPhone: "Bitte geben Sie eine gültige Mobilnummer ein."
-      },
-      fr: {
-        initialTitle: "Confirmation de votre inscription...",
-        initialStatus: "Veuillez patienter pendant la vérification de vos informations.",
-        successTitle: "Inscription confirmée",
-        successStatus: "Merci d’avoir confirmé votre inscription. Vous recevrez désormais les actualités de Wastefree.",
-        errorTitle: "Échec de la confirmation",
-        errorStatus: "Nous n'avons pas pu confirmer votre inscription. Veuillez réessayer plus tard ou nous contacter.",
-        missingTitle: "Requête incomplète",
-        missingStatus: "Impossible de traiter votre confirmation. Il manque un paramètre dans le lien.",
-        formTitle: "Veuillez fournir votre adresse et numéro de mobile",
-        street: "Rue + No :",
-        zip: "Code postal :",
-        city: "Ville :",
-        country: "Pays :",
-        prefix: "Indicatif pays :",
-        phone: "Numéro de mobile :",
-        submit: "Soumettre",
-        successSubmit: "Merci ! Vos informations ont été soumises.",
-        errorSubmit: "Erreur lors de la soumission. Veuillez réessayer.",
-        invalidPhone: "Veuillez entrer un numéro valide."
-      },
-      it: {
-        initialTitle: "Conferma della tua iscrizione...",
-        initialStatus: "Attendere mentre verifichiamo le informazioni.",
-        successTitle: "Iscrizione confermata",
-        successStatus: "Grazie per aver confermato la tua iscrizione. Riceverai presto le comunicazioni di Wastefree.",
-        errorTitle: "Conferma non riuscita",
-        errorStatus: "Non siamo riusciti a confermare la tua iscrizione. Riprova più tardi o contattaci.",
-        missingTitle: "Richiesta incompleta",
-        missingStatus: "Non è stato possibile completare la conferma. Parametro del link mancante.",
-        formTitle: "Inserisci indirizzo e numero di cellulare",
-        street: "Via + numero:",
-        zip: "CAP:",
-        city: "Città:",
-        country: "Paese:",
-        prefix: "Prefisso internazionale:",
-        phone: "Numero di cellulare:",
-        submit: "Invia",
-        successSubmit: "Grazie! I tuoi dati sono stati inviati.",
-        errorSubmit: "Errore nell'invio dei dati. Riprova.",
-        invalidPhone: "Inserisci un numero valido."
-      }
+      // Add other language blocks here if needed (de, fr, it)
     };
 
     const t = translations[lang] || translations.en;
@@ -188,46 +160,44 @@
 
     function createContactForm() {
       const formContainer = document.createElement("div");
-      formContainer.style.marginTop = "40px";
       formContainer.innerHTML = `
-        <h2 style="font-size: 20px; color: #333; margin-bottom: 10px;">${t.formTitle}</h2>
-        <form id="contactForm" style="max-width: 700px; margin: 0 auto; text-align: left;">
+        <form id="contactForm">
           <div style="margin-bottom: 15px;">
-            <label style="display:block; font-size: 17px;">${t.street}</label>
-            <input type="text" id="street" required style="width: 100%; padding: 10px;"/>
+            <label>${t.street}</label>
+            <input type="text" id="street" required />
           </div>
-          <div style="margin-bottom: 15px;">
-            <label style="display:block; font-size: 17px;">${t.zip}</label>
-            <input type="text" id="zip" required style="width: 100%; padding: 10px;"/>
-          </div>
-          <div style="margin-bottom: 15px;">
-            <label style="display:block; font-size: 17px;">${t.city}</label>
-            <input type="text" id="city" required style="width: 100%; padding: 10px;"/>
-          </div>
-          <div style="margin-bottom: 15px;">
-            <label style="display:block; font-size: 17px;">${t.country}</label>
-            <input type="text" id="country" required style="width: 100%; padding: 10px;"/>
+          <div class="form-row" style="margin-bottom: 15px;">
+            <div>
+              <label>${t.zip}</label>
+              <input type="text" id="zip" required />
+            </div>
+            <div>
+              <label>${t.city}</label>
+              <input type="text" id="city" required />
+            </div>
           </div>
           <div style="margin-bottom: 15px;">
-            <label style="display:block; font-size: 17px;">${t.prefix}</label>
-            <input type="text" id="prefix" placeholder="+1" required style="width: 100%; padding: 10px;"/>
+            <label>${t.country}</label>
+            <input type="text" id="country" required />
           </div>
-          <div style="margin-bottom: 20px;">
-            <label style="display:block; font-size: 17px;">${t.phone}</label>
-            <input type="tel" id="mobile" required style="width: 100%; padding: 10px;"/>
+          <div style="margin-bottom: 15px;">
+            <label>${t.phone}</label>
+            <input type="tel" id="mobile" required />
           </div>
-          <button type="submit" style="padding: 12px 25px; background-color: #001eb3; color: white; border: none; border-radius: 5px; font-size: 16px;">
-            ${t.submit}
-          </button>
-          <p id="formStatus" style="margin-top: 15px;"></p>
+          <button type="submit">${t.submit}</button>
+          <p id="formStatus"></p>
         </form>
       `;
       document.querySelector(".container").appendChild(formContainer);
 
       document.getElementById("contactForm").addEventListener("submit", function (e) {
         e.preventDefault();
-        const fullNumber = document.getElementById("prefix").value + document.getElementById("mobile").value;
-        const phone = libphonenumber.parsePhoneNumber(fullNumber);
+
+        const phoneInput = document.getElementById("mobile").value;
+        let phone;
+        try {
+          phone = libphonenumber.parsePhoneNumber(phoneInput);
+        } catch (e) {}
 
         const statusMsg = document.getElementById("formStatus");
         if (!phone || !phone.isValid()) {
@@ -242,7 +212,6 @@
           zip: document.getElementById("zip").value,
           city: document.getElementById("city").value,
           country: document.getElementById("country").value,
-          prefix: document.getElementById("prefix").value,
           mobile: phone.number
         };
 
