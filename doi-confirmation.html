@@ -90,11 +90,11 @@
       border-radius: 10px;
       text-align: center;
       box-sizing: border-box;
-      display: none;
+      display: none; /* Hidden by default */
     }
     .submit-wrapper {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 10px;
     }
     button {
       padding: 10px 25px;
@@ -147,7 +147,8 @@
         phone: "Mobile Number:",
         submit: "Submit",
         successSubmit: "Thank you! Your information has been submitted.",
-        errorSubmit: "There was an error submitting your information. Please try again."
+        errorSubmit: "There was an error submitting your information. Please try again.",
+        successMessage: "Your subscription has been successfully confirmed! Please complete your data below."
       },
       de: {
         initialTitle: "Bestätigung Ihrer Anmeldung...",
@@ -165,7 +166,8 @@
         phone: "Mobilnummer:",
         submit: "Absenden",
         successSubmit: "Vielen Dank! Ihre Daten wurden übermittelt.",
-        errorSubmit: "Fehler beim Absenden. Bitte versuchen Sie es erneut."
+        errorSubmit: "Fehler beim Absenden. Bitte versuchen Sie es erneut.",
+        successMessage: "Ihre Anmeldung wurde erfolgreich bestätigt! Bitte vervollständigen Sie Ihre Daten unten."
       }
     };
 
@@ -239,15 +241,17 @@
         iframe.src = url.toString();
         iframe.style.display = "none";
         iframe.onload = () => {
-          statusMsg.textContent = t.successSubmit;
+          // Show success message
+          statusMsg.textContent = t.successMessage;
           statusMsg.style.color = "green";
-          statusMsg.style.display = "block"; // Make the confirmation message visible
-          form.style.display = "none"; // Hide the form after successful submission
+          statusMsg.style.display = "block"; // Show the success message
+          form.style.display = "none"; // Hide the form
         };
         iframe.onerror = () => {
+          // Show error message
           statusMsg.textContent = t.errorSubmit;
           statusMsg.style.color = "red";
-          statusMsg.style.display = "block"; // Make the error message visible
+          statusMsg.style.display = "block"; // Show the error message
         };
         document.body.appendChild(iframe);
       });
