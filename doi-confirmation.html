@@ -82,7 +82,7 @@
     }
     .submit-wrapper {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 10px;
     }
     button {
       padding: 10px 25px;
@@ -98,6 +98,11 @@
     }
     .form-container.success {
       display: none;
+    }
+    .success-message {
+      text-align: center;
+      font-size: 18px;
+      color: green;
     }
     @media (max-width: 600px) {
       .form-row {
@@ -236,6 +241,12 @@
           statusMsg.textContent = t.successSubmit;
           statusMsg.style.color = "green";
           formContainer.classList.add("success");
+
+          // Show the success message and hide form
+          const successMessage = document.createElement("p");
+          successMessage.classList.add("success-message");
+          successMessage.textContent = t.successSubmit;
+          document.querySelector(".container").appendChild(successMessage);
         };
         iframe.onerror = () => {
           statusMsg.textContent = t.errorSubmit;
