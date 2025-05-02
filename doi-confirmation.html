@@ -90,7 +90,7 @@
       border-radius: 10px;
       text-align: center;
       box-sizing: border-box;
-      display: none; /* Hide initially */
+      display: none;
     }
     .submit-wrapper {
       text-align: center;
@@ -125,8 +125,6 @@
   <script>
     const statusEl = document.getElementById("status");
     const headlineEl = document.getElementById("headline");
-    const formStatusEl = document.getElementById("formStatus"); // Reference to form status message
-    const formEl = document.getElementById("contactForm"); // Reference to the form
 
     const params = new URLSearchParams(window.location.search);
     const id = params.get("Id");
@@ -218,8 +216,8 @@
           <div class="submit-wrapper">
             <button type="submit">${t.submit}</button>
           </div>
+          <p id="formStatus"></p>
         </form>
-        <p id="formStatus" style="display: none;"></p> <!-- Hide initially -->
       `;
       document.querySelector(".container").appendChild(formContainer);
 
@@ -227,6 +225,7 @@
         e.preventDefault();
 
         const statusMsg = document.getElementById("formStatus");
+        const form = document.getElementById("contactForm");
 
         const url = new URL("https://hooks.zapier.com/hooks/catch/6735747/2paoc9l/");
         url.searchParams.set("Id", id);
@@ -240,17 +239,15 @@
         iframe.src = url.toString();
         iframe.style.display = "none";
         iframe.onload = () => {
-          // Hide form and show success message
-          formEl.style.display = "none";
           statusMsg.textContent = t.successSubmit;
           statusMsg.style.color = "green";
-          statusMsg.style.display = "block"; // Show the status message
+          statusMsg.style.display = "block"; // Make the confirmation message visible
+          form.style.display = "none"; // Hide the form after successful submission
         };
         iframe.onerror = () => {
-          // Show error message, but keep form visible
           statusMsg.textContent = t.errorSubmit;
           statusMsg.style.color = "red";
-          statusMsg.style.display = "block"; // Show the error message
+          statusMsg.style.display = "block"; // Make the error message visible
         };
         document.body.appendChild(iframe);
       });
