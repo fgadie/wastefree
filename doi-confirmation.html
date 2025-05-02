@@ -90,10 +90,11 @@
       border-radius: 10px;
       text-align: center;
       box-sizing: border-box;
+      display: none; /* Hide initially */
     }
     .submit-wrapper {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 10px;
     }
     button {
       padding: 10px 25px;
@@ -124,6 +125,8 @@
   <script>
     const statusEl = document.getElementById("status");
     const headlineEl = document.getElementById("headline");
+    const formStatusEl = document.getElementById("formStatus"); // Reference to form status message
+    const formEl = document.getElementById("contactForm"); // Reference to the form
 
     const params = new URLSearchParams(window.location.search);
     const id = params.get("Id");
@@ -215,8 +218,8 @@
           <div class="submit-wrapper">
             <button type="submit">${t.submit}</button>
           </div>
-          <p id="formStatus"></p>
         </form>
+        <p id="formStatus" style="display: none;"></p> <!-- Hide initially -->
       `;
       document.querySelector(".container").appendChild(formContainer);
 
@@ -237,12 +240,17 @@
         iframe.src = url.toString();
         iframe.style.display = "none";
         iframe.onload = () => {
+          // Hide form and show success message
+          formEl.style.display = "none";
           statusMsg.textContent = t.successSubmit;
           statusMsg.style.color = "green";
+          statusMsg.style.display = "block"; // Show the status message
         };
         iframe.onerror = () => {
+          // Show error message, but keep form visible
           statusMsg.textContent = t.errorSubmit;
           statusMsg.style.color = "red";
+          statusMsg.style.display = "block"; // Show the error message
         };
         document.body.appendChild(iframe);
       });
