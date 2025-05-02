@@ -77,20 +77,8 @@
       flex: 1;
     }
     #formStatus {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 20px;
-      padding: 20px;
-      width: 100%;
-      max-width: 400px;
-      margin: 20px auto;
-      background-color: #e0f7fa;
-      color: #00796b;
-      border: 2px solid #00796b;
-      border-radius: 10px;
-      text-align: center;
-      box-sizing: border-box;
-      display: none; /* Hidden by default */
+      font-size: 15px;
+      margin-top: 10px;
     }
     .submit-wrapper {
       text-align: center;
@@ -147,8 +135,7 @@
         phone: "Mobile Number:",
         submit: "Submit",
         successSubmit: "Thank you! Your information has been submitted.",
-        errorSubmit: "There was an error submitting your information. Please try again.",
-        successMessage: "Your subscription has been successfully confirmed! Please complete your data below."
+        errorSubmit: "There was an error submitting your information. Please try again."
       },
       de: {
         initialTitle: "Bestätigung Ihrer Anmeldung...",
@@ -166,8 +153,7 @@
         phone: "Mobilnummer:",
         submit: "Absenden",
         successSubmit: "Vielen Dank! Ihre Daten wurden übermittelt.",
-        errorSubmit: "Fehler beim Absenden. Bitte versuchen Sie es erneut.",
-        successMessage: "Ihre Anmeldung wurde erfolgreich bestätigt! Bitte vervollständigen Sie Ihre Daten unten."
+        errorSubmit: "Fehler beim Absenden. Bitte versuchen Sie es erneut."
       }
     };
 
@@ -227,7 +213,6 @@
         e.preventDefault();
 
         const statusMsg = document.getElementById("formStatus");
-        const form = document.getElementById("contactForm");
 
         const url = new URL("https://hooks.zapier.com/hooks/catch/6735747/2paoc9l/");
         url.searchParams.set("Id", id);
@@ -241,17 +226,12 @@
         iframe.src = url.toString();
         iframe.style.display = "none";
         iframe.onload = () => {
-          // Show success message
-          statusMsg.textContent = t.successMessage;
+          statusMsg.textContent = t.successSubmit;
           statusMsg.style.color = "green";
-          statusMsg.style.display = "block"; // Show the success message
-          form.style.display = "none"; // Hide the form
         };
         iframe.onerror = () => {
-          // Show error message
           statusMsg.textContent = t.errorSubmit;
           statusMsg.style.color = "red";
-          statusMsg.style.display = "block"; // Show the error message
         };
         document.body.appendChild(iframe);
       });
