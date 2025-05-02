@@ -93,6 +93,12 @@
       font-size: 16px;
       cursor: pointer;
     }
+    .form-container {
+      display: block;
+    }
+    .form-container.success {
+      display: none;
+    }
     @media (max-width: 600px) {
       .form-row {
         flex-direction: column;
@@ -183,6 +189,7 @@
 
     function createContactForm(t) {
       const formContainer = document.createElement("div");
+      formContainer.classList.add("form-container");
       formContainer.innerHTML = `
         <form id="contactForm">
           <label>${t.street}</label>
@@ -228,6 +235,7 @@
         iframe.onload = () => {
           statusMsg.textContent = t.successSubmit;
           statusMsg.style.color = "green";
+          formContainer.classList.add("success");
         };
         iframe.onerror = () => {
           statusMsg.textContent = t.errorSubmit;
